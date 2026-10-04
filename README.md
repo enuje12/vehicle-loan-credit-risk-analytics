@@ -74,7 +74,7 @@ The dashboard provides a business-focused view of the portfolio, covering:
 - Previous overdue accounts
 - XGBoost risk deciles
 
-![Power BI Dashboard](images/risk dashboard.png)
+![Power BI Dashboard](risk%20dashboard.png)
 
 ## Key Insights
 
