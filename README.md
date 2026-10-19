@@ -1,91 +1,101 @@
-# Indian Vehicle Loan Credit Risk Analytics
+# Vehicle Loan Credit Risk Analysis and Prediction
 
-An end-to-end credit risk analytics project using **Python, SQL, Power BI, and XGBoost** to analyze vehicle loan defaults and identify higher-risk borrower segments.
+An end-to-end analysis of vehicle loan defaults using **Python, MySQL, Power BI, and XGBoost** to identify risk factors, analyze portfolio performance, and segment borrowers by predicted default risk.
 
 ## Problem Statement
 
-Loan defaults create financial risk for lenders and make it important to identify borrowers who may be more likely to default.
+Loan defaults expose financial institutions to potential losses. Identifying borrowers with higher default risk can help lenders make more informed credit assessment decisions.
 
-This project aims to analyze vehicle loan data to understand the factors associated with loan default and develop a data-driven approach to **risk segmentation and portfolio analysis**.
+This project analyzes the **L&T Financial Services Vehicle Loan dataset** to understand factors associated with loan defaults, compare machine learning models, and identify borrower segments that may require closer assessment.
 
-## Objective
+## Key Results and Insights
 
-- Identify key factors associated with loan default
-- Analyze default patterns across borrower and loan characteristics
-- Compare machine learning approaches for risk prediction
-- Segment borrowers based on predicted default risk
-- Build a dashboard to communicate the findings for business decision-making
+### **1. Portfolio Default Risk**  
+The portfolio had an overall default rate of **20.09%** across **41,000+ vehicle loan records**, establishing the baseline for assessing credit risk.
 
-## Approach
+### **2. Higher Default Risk in the 80–90% LTV Band**  
+The **80–90% loan-to-value (LTV) band** recorded the highest observed default rate. It also contributed a larger share of defaults than its share of total loans, highlighting a segment that warrants closer monitoring.
 
-The project was carried out in the following stages:
+### **3. Credit Score and Default Risk**  
+Default rates varied across credit score bands, indicating differences in observed default risk across borrower credit profiles.
 
-1. **Data Cleaning & EDA** — Cleaned and explored 41K+ loan records using Python.
-2. **Feature Engineering** — Created features including borrower age, LTV bands, credit score bands, and credit history measures.
-3. **SQL Analysis** — Used MySQL to analyze portfolio-level default patterns.
-4. **Machine Learning** — Compared Logistic Regression and XGBoost for default prediction.
-5. **Risk Segmentation** — Ranked borrowers by predicted default probability and divided them into 10 risk deciles.
-6. **Dashboard** — Built a Power BI dashboard to present portfolio and risk insights.
+### **4. Previous Overdue Accounts and Default Risk**  
+Default rates varied by the number of previous overdue accounts. This highlights repayment history as a useful factor in understanding borrower risk, although the relationship was not consistently increasing across all overdue-account categories.
 
-## Key Results
+### **5. XGBoost Model Performance**  
+XGBoost achieved a mean **5-fold cross-validation ROC-AUC of 0.668**, outperforming Logistic Regression at **0.644**. This indicates that XGBoost was better at distinguishing between default and non-default borrowers in the evaluation.
 
-- **41K+** loan records analyzed
-- **20.09%** overall default rate
-- **53.47K** average loan amount
-- **73.85%** average LTV
-- XGBoost achieved a **0.668 mean 5-fold ROC-AUC**
-- Logistic Regression achieved a **0.644 mean 5-fold ROC-AUC**
-- Default rates ranged from approximately **8% in the lowest-risk decile to 36% in the highest-risk decile**
-- The **80–90% LTV band** showed the highest observed default rate
-
-## Machine Learning
-
-Two models were evaluated:
-
-| Model | 5-Fold Mean ROC-AUC |
-|---|---:|
-| Logistic Regression | **0.644** |
-| XGBoost | **0.668** |
-
-XGBoost was selected for risk segmentation because it showed stronger cross-validated performance.
-
-Rather than relying only on a fixed classification threshold, borrowers were ranked by predicted default probability and grouped into **10 risk deciles** to provide a more useful view of relative borrower risk.
-
-## SQL Analysis
-
-MySQL was used for portfolio-level analysis, including:
-
-- Default rate by LTV
-- Default rate by credit score
-- Default rate by previous overdue accounts
-- Default rate by employment type
-- Loan share vs. default share across LTV bands
-- High-LTV borrowers with previous overdue accounts
+### **6. Risk Decile Segmentation**  
+The XGBoost model ranked borrowers into 10 risk deciles. Observed default rates ranged from approximately **8% in the lowest-risk decile to 36% in the highest-risk decile**, representing a **4.5× spread** and demonstrating useful separation between lower- and higher-risk borrower segments.
 
 ## Power BI Dashboard
 
-The dashboard provides a business-focused view of the portfolio, covering:
+The dashboard presents portfolio performance and borrower risk patterns through:
 
-- Portfolio KPIs
-- Default rate by LTV
-- Credit score analysis
-- Loan share vs. default share
-- Employment type
-- Previous overdue accounts
-- XGBoost risk deciles
+- **Portfolio KPIs:** Total loans, default rate, average loan amount, and average LTV.
+- **LTV analysis:** Default rates across LTV bands.
+- **Credit profile:** Default rates by credit score.
+- **Portfolio comparison:** Loan share versus default share across LTV bands.
+- **Repayment history:** Default rates by previous overdue accounts.
+- **Risk segmentation:** Observed default rates across XGBoost risk deciles.
 
-![Power BI Dashboard](risk%20dashboard.png)
+![Power BI Credit Risk Dashboard](risk%20dashboard.png)
 
-## Key Insights
+## Methodology
 
-- The **80–90% LTV band** had the highest observed default rate.
-- Credit score segments showed meaningful differences in default rates.
-- Previous overdue accounts were associated with differences in observed default risk.
-- XGBoost risk deciles showed clear separation between lower- and higher-risk borrower groups.
+1. **Data Cleaning:** Handled missing values, imputed numerical fields using medians, addressed missing employment types, and removed duplicate records.
+2. **Feature Engineering:** Converted account age and credit history into months and created borrower age and risk-related features.
+3. **Exploratory Analysis:** Examined default distribution, LTV, credit scores, overdue accounts, and numerical correlations.
+4. **SQL Analysis:** Wrote seven MySQL queries to analyze portfolio performance and default patterns.
+5. **Model Evaluation:** Compared Logistic Regression and XGBoost using 5-fold cross-validation and ROC-AUC.
+6. **Risk Segmentation:** Ranked borrowers by predicted default probability and grouped them into ten risk deciles.
+7. **Visualization:** Built a Power BI dashboard to communicate findings and support risk assessment.
+
+## Machine Learning
+
+Two classification models were evaluated:
+
+| Model | Mean 5-Fold ROC-AUC |
+|---|---:|
+| Logistic Regression | 0.644 |
+| XGBoost | **0.668** |
+
+XGBoost was selected for risk segmentation because it achieved stronger cross-validated discrimination than Logistic Regression.
+
+Rather than relying only on a fixed classification threshold, the model was used to rank borrowers by predicted default probability. The resulting deciles showed a substantial difference in observed default rates between the lowest- and highest-risk groups.
 
 ## Tech Stack
 
-**Python:** Pandas, NumPy, Scikit-learn, XGBoost  
-**SQL:** MySQL  
-**Visualization:** Power BI, DAX, Matplotlib
+- **Programming:** Python
+- **Data Analysis:** Pandas, NumPy
+- **Database:** MySQL
+- **Machine Learning:** Scikit-learn, XGBoost
+- **Visualization:** Power BI, DAX, Matplotlib
+- **Techniques:** EDA, feature engineering, classification, cross-validation, risk segmentation, SQL CTEs and window functions
 
+## Data Source
+
+**L&T Financial Services Vehicle Loan dataset.**
+
+The dataset contains loan and borrower credit information, including disbursed amount, asset cost, LTV, employment type, credit score, account history, overdue accounts, and the loan-default indicator.
+
+The analyzed dataset contained **41K+ records**. The exact source URL and date coverage are not documented here.
+
+## Business Implications
+
+- **Credit assessment:** Higher-LTV borrowers and borrowers with weaker credit or repayment signals can be prioritized for further assessment.
+- **Portfolio monitoring:** Comparing loan share with default share helps identify segments contributing disproportionately to defaults.
+- **Risk prioritization:** Risk deciles provide a relative ranking of borrowers, helping risk teams focus attention on higher-risk segments.
+
+These are potential applications of the analysis; actual reductions in defaults or financial losses were not measured.
+
+## Limitations
+
+- The model's mean ROC-AUC of **0.668** indicates moderate discrimination, leaving room for improvement.
+- Class imbalance affects classification performance, so accuracy alone is not sufficient to evaluate the model.
+- Risk deciles indicate relative risk, not certainty that an individual borrower will default.
+- The analysis is based on the available dataset and has not been validated in a live lending environment.
+
+## Conclusion
+
+This project combines **SQL-based portfolio analysis, machine learning, and Power BI visualization** to investigate vehicle loan default risk. XGBoost outperformed the Logistic Regression baseline in cross-validation, while risk-decile analysis revealed meaningful differences in observed default rates. The results demonstrate how data analytics can support borrower risk assessment and portfolio monitoring.
